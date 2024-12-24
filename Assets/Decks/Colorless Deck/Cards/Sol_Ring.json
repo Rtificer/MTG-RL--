@@ -1,0 +1,12 @@
+{
+    "ID" : 10,
+    "Name" : "Sol_Ring",
+    "Type(s)" : ["Artifact"],
+    "Color(s)" : ["Colorless"],
+    "Base_Cost" : [
+        "{1}"
+    ],
+    "Abilities" : [
+        "TapForTwoColorlessMana"
+    ]
+}
