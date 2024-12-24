@@ -23,10 +23,10 @@ fi
 git clone https://github.com/Rtificer/MTG-RL_CPP.git
 
 # Move files To the current directory
-mv MTG-RL/++* .
+mv MTG-RL_CPP/* .
 
 # Delete the MTG-RL directory
-rm -rf MTG-RL++
+rm -rf MTG-RL_CPP
 
 # Set executable permission on Start.sh
 chmod +x Start.sh
