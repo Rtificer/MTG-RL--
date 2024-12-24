@@ -16,7 +16,7 @@ do
     deckName=$(basename "${dir}")
 
     echo "   Checking the name of ${deckName}..."
-    if [[ "$deckName" =~ [[:space:][:cntrl:][:punct:]] ]]; then
+    if [[ "$deckName" =~ [[:space:][:cntrl:][:punct:]] && ! "$deckName" =~ _ ]]; then
         echo "      Error: Deck name '$deckName' contains spaces or other unsupported characters."
         echo "      Please ensure deck names do not contain spaces or characters like punctuation."
         exit 1
