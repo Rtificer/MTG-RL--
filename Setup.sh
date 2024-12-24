@@ -20,7 +20,7 @@ else
     echo "g++-14 is already installed."
 fi
 
-git clone https://github.com/Rtificer/MTG-RL.git
+git clone https://github.com/Rtificer/MTG-RL_CPP.git
 
 # Move files To the current directory
 mv MTG-RL/++* .
