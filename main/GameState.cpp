@@ -36,26 +36,38 @@ public:
         Cards.push_back(cardID);
     }
 
-    void RemoveCard(uint16_t cardID = NULL, uint16_t Index = NULL) {
+    void RemoveCard(std::optional<uint16_t> cardID, std::optional<size_t> index) {
+        //With std::optional the variable is a boolean (stating wether or not it contains data) and *variable is the actual data of the variable.
+        if (index) {
 
-        if (Index != NULL) {
-            if (Index < Cards.size()) {
-                Cards.erase(Cards.begin() + Index);
+            if (*index < Cards.size()) {
+
+                Cards.erase(Cards.begin() + *index);
+
+            } else {
+
+                std::cout << "Index out of range.\n";
+
             }
-        }
-        else if (cardID != NULL) {
-            //Attempts to find cardID within the range from the start to the end of the vector
-            auto it = std::find(Cards.begin(), Cards.end(), cardID);
+
+        } else if (cardID) {
+            //If it doesn't find any instances of cardID it returns Cards.end() which is the position after the current end of the vector.
+            auto it = std::find(Cards.begin(), Cards.end(), *cardID);
 
             if (it != Cards.end()) {
+
                 Cards.erase(it);
+
+            } else {
+
+                std::cout << "CardID not found.\n";
             }
-        }
 
-        else {
+        } else {
+
             std::cout << "No Index or cardID given for CardZone Removal.\n";
-        }
 
+        }
     }
 };
 
@@ -81,23 +93,33 @@ public:
         Cards.push_back(card);
     }
 
-    void RemoveCard(uint16_t cardID = NULL, uint16_t Index = NULL) {
+    void RemoveCard(std::optional<uint16_t> cardID, std::optional<size_t> index) {
+        //With std::optional the variable is a boolean (stating wether or not it contains data) and *variable is the actual data of the variable.
+        if (index) {
 
+            if (*index < Cards.size()) {
+                Cards.erase(Cards.begin() + *index);
 
-        if (Index != NULL) {
-            if (Index < Cards.size()) {
-                Cards.erase(Cards.begin() + Index);
+            } else {
+
+                std::cout << "Index out of range.\n";
+
             }
-        }
-        else if (cardID != NULL) {
-            auto it = std::remove_if(Cards.begin(), Cards.end(), [&](const CardState& card) { return card.CardID == cardID; });
+
+        } else if (cardID) {
+            auto it = std::remove_if(Cards.begin(), Cards.end(), [&](const CardState& card) { return card.CardID == *cardID; });
 
             if (it != Cards.end()) {
-                Cards.erase(it);
+                Cards.erase(it, Cards.end());
+
+            } else {
+                std::cout << "CardID not found.\n";
+
             }
-        }
-        else {
+
+        } else {
             std::cout << "No Index or cardID given for Battlefield Removal.\n";
+
         }
     }
 };
@@ -113,7 +135,9 @@ public:
     std::unordered_map<uint8_t, PerspectiveData> Data;
 
     PlayerPerspective(uint8_t playerID, uint16_t totalCardCount) {
+
         Data[playerID].DefaultProbabilityVector.resize(totalCardCount, 0);
+
     }
 };
 

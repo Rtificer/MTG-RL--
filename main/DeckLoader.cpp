@@ -1,2 +1,3 @@
-class DeckLoader
-    def __init
+#pragma once
+#include <string>
+#include <nlohmann/json.hpp>

@@ -54,18 +54,35 @@ done
 echo ""
 echo "Generating project files..."
 
-# Dynamically create a registry file for decks
+# Dynamically create a registry file for decks and abilities
 registryFile="./Assets/Decks/DeckRegistry.cpp"
 echo "// Auto-generated Deck Registry" > "$registryFile"
 echo "#include <iostream>" >> "$registryFile"
 echo "#include \"Deck.h\"" >> "$registryFile"
 
+# Include ability headers for static linking
+echo "// Ability includes" >> "$registryFile"
+for dir in ./Assets/Decks/*/
+do
+    abilitiesDir="${dir}Abilities/"
+    if [ -d "$abilitiesDir" ]; then
+        for abilityFile in "${abilitiesDir}"*.cpp; do
+            if [ -f "$abilityFile" ]; then
+                abilityName=$(basename "$abilityFile")
+                echo "#include \"$abilityFile\"" >> "$registryFile"
+            fi
+        done
+    fi
+done
+
+# Declare extern decks
 for dir in ./Assets/Decks/*/
 do
     deckName=$(basename "${dir}")
     echo "extern Deck ${deckName}Deck();" >> "$registryFile"
 done
 
+# Create loadAllDecks function
 echo "std::vector<Deck> loadAllDecks() {" >> "$registryFile"
 echo "    std::vector<Deck> decks;" >> "$registryFile"
 for dir in ./Assets/Decks/*/
